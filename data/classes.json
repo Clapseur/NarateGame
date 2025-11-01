@@ -1,0 +1,111 @@
+{
+  "guerrier": {
+    "nom": "Guerrier",
+    "description": "Un combattant robuste maîtrisant l'épée et le bouclier. Excellent en combat rapproché.",
+    "stats": {
+      "vie": 120,
+      "attaque": 18,
+      "defense": 15,
+      "vitesse": 8
+    },
+    "competences": [
+      {
+        "nom": "Charge Brutale",
+        "description": "Une attaque puissante qui inflige des dégâts supplémentaires",
+        "degats": 25,
+        "cout_energie": 15
+      },
+      {
+        "nom": "Défense Renforcée",
+        "description": "Augmente temporairement la défense",
+        "effet": "defense_boost",
+        "duree": 3
+      }
+    ],
+    "equipement_initial": ["épée_fer", "bouclier_bois"],
+    "avantages_combat": ["peut_intimider_gobelins", "resistance_physique"],
+    "dialogue_special": "intimidation"
+  },
+  "mage": {
+    "nom": "Mage",
+    "description": "Un érudit des arts mystiques capable de lancer des sorts dévastateurs.",
+    "stats": {
+      "vie": 80,
+      "attaque": 22,
+      "defense": 8,
+      "vitesse": 12
+    },
+    "competences": [
+      {
+        "nom": "Boule de Feu",
+        "description": "Lance une boule de feu enflammée sur l'ennemi",
+        "degats": 28,
+        "cout_energie": 20
+      },
+      {
+        "nom": "Bouclier Magique",
+        "description": "Crée une barrière magique protectrice",
+        "effet": "bouclier_magique",
+        "duree": 4
+      }
+    ],
+    "equipement_initial": ["baton_apprenti", "grimoire_base"],
+    "avantages_combat": ["peut_detecter_magie", "degats_magiques"],
+    "dialogue_special": "connaissance_arcane"
+  },
+  "voleur": {
+    "nom": "Voleur",
+    "description": "Un expert de la discrétion et de l'agilité, maître des attaques sournoises.",
+    "stats": {
+      "vie": 90,
+      "attaque": 16,
+      "defense": 10,
+      "vitesse": 20
+    },
+    "competences": [
+      {
+        "nom": "Attaque Sournoise",
+        "description": "Une attaque rapide et précise dans le dos de l'ennemi",
+        "degats": 24,
+        "cout_energie": 12
+      },
+      {
+        "nom": "Esquive",
+        "description": "Augmente les chances d'éviter les attaques",
+        "effet": "esquive_boost",
+        "duree": 3
+      }
+    ],
+    "equipement_initial": ["dague_acier", "cape_ombre"],
+    "avantages_combat": ["peut_fuir_facilement", "attaque_surprise"],
+    "dialogue_special": "persuasion_sournoise"
+  },
+  "paladin": {
+    "nom": "Paladin",
+    "description": "Un guerrier saint alliant force martiale et pouvoirs divins de guérison.",
+    "stats": {
+      "vie": 110,
+      "attaque": 16,
+      "defense": 18,
+      "vitesse": 10
+    },
+    "competences": [
+      {
+        "nom": "Frappe Sacrée",
+        "description": "Une attaque bénie qui inflige des dégâts supplémentaires aux créatures maléfiques",
+        "degats": 20,
+        "degats_bonus_mal": 10,
+        "cout_energie": 18
+      },
+      {
+        "nom": "Soin Divin",
+        "description": "Restaure une partie de la vie",
+        "soin": 35,
+        "cout_energie": 25
+      }
+    ],
+    "equipement_initial": ["epee_benedite", "armure_sacree"],
+    "avantages_combat": ["resistance_mal", "peut_soigner"],
+    "dialogue_special": "autorite_divine"
+  }
+}

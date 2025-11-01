@@ -1,0 +1,226 @@
+{
+  "introduction": {
+    "id": "intro",
+    "titre": "L'Appel du Donjon",
+    "texte": "Vous vous tenez devant l'entrée d'un ancien donjon, ses pierres moussues témoignant de siècles d'abandon. Des légendes parlent d'un trésor fabuleux caché dans ses profondeurs, mais aussi de dangers mortels qui attendent les imprudents.\n\nLe vent siffle à travers les fissures de la porte de pierre, comme un avertissement... ou une invitation.",
+    "choix": [
+      {
+        "texte": "Entrer immédiatement dans le donjon",
+        "destination": "entree_directe",
+        "trait": "audacieux"
+      },
+      {
+        "texte": "Examiner l'entrée plus attentivement",
+        "destination": "examen_entree",
+        "trait": "prudent"
+      },
+      {
+        "texte": "Chercher une autre entrée",
+        "destination": "entree_alternative",
+        "trait": "malin"
+      }
+    ]
+  },
+  "entree_directe": {
+    "id": "entree_directe",
+    "titre": "Dans les Ténèbres",
+    "texte": "Vous poussez la lourde porte qui grince sinistrement. L'obscurité vous engloutit immédiatement. Vos pas résonnent dans un couloir de pierre humide.\n\nSoudain, vous entendez un grognement dans l'ombre...",
+    "encounter": "gobelin",
+    "apres_combat": "couloir_principal",
+    "choix_fuite": "retour_entree"
+  },
+  "examen_entree": {
+    "id": "examen_entree",
+    "titre": "Indices Anciens",
+    "texte": "En examinant attentivement l'entrée, vous découvrez d'anciennes inscriptions gravées dans la pierre. Elles semblent indiquer que ce donjon était autrefois un temple dédié à une divinité oubliée.",
+    "condition_classe": {
+      "mage": "Grâce à vos connaissances arcanes, vous déchiffrez une partie des runes : 'Que la lumière guide les purs de cœur'.",
+      "paladin": "Votre foi vous permet de ressentir une présence divine résiduelle. Ce lieu était sacré."
+    },
+    "item_trouve": "cristal_lumiere",
+    "choix": [
+      {
+        "texte": "Entrer avec précaution",
+        "destination": "couloir_principal"
+      },
+      {
+        "texte": "Réciter une prière avant d'entrer",
+        "destination": "entree_benie",
+        "classe_requise": "paladin"
+      }
+    ]
+  },
+  "entree_alternative": {
+    "id": "entree_alternative",
+    "titre": "Passage Secret",
+    "texte": "En contournant le donjon, vous découvrez une fissure dans le mur, assez large pour vous y glisser. Ce passage semble mener directement aux niveaux inférieurs.",
+    "condition_classe": {
+      "voleur": "Votre expérience vous permet de repérer des traces de passage récentes. D'autres ont utilisé cette route."
+    },
+    "choix": [
+      {
+        "texte": "Emprunter le passage secret",
+        "destination": "niveau_inferieur"
+      },
+      {
+        "texte": "Retourner à l'entrée principale",
+        "destination": "entree_directe"
+      }
+    ]
+  },
+  "couloir_principal": {
+    "id": "couloir_principal",
+    "titre": "Le Cœur du Donjon",
+    "texte": "Vous avancez dans un large couloir orné de fresques anciennes. Trois passages s'ouvrent devant vous : l'un mène vers une lueur dorée, un autre résonne d'échos mystérieux, et le troisième exhale un air froid et humide.",
+    "choix": [
+      {
+        "texte": "Suivre la lueur dorée",
+        "destination": "salle_tresor",
+        "trait": "cupide"
+      },
+      {
+        "texte": "Explorer le passage aux échos",
+        "destination": "bibliotheque_ancienne",
+        "trait": "curieux"
+      },
+      {
+        "texte": "Prendre le passage froid",
+        "destination": "crypte_squelettes",
+        "trait": "courageux"
+      }
+    ]
+  },
+  "salle_tresor": {
+    "id": "salle_tresor",
+    "titre": "L'Appât du Gain",
+    "texte": "La lueur dorée provient d'un petit tas de pièces d'or éparpillées sur le sol. Mais quelque chose cloche... c'est trop facile.",
+    "piege": {
+      "type": "fosse",
+      "degats": 20,
+      "esquivable_par": ["voleur", "trait_prudent"]
+    },
+    "or_trouve": 50,
+    "encounter": "squelette",
+    "apres_combat": "decision_majeure_1"
+  },
+  "bibliotheque_ancienne": {
+    "id": "bibliotheque_ancienne",
+    "titre": "Savoir Oublié",
+    "texte": "Vous entrez dans une vaste bibliothèque aux étagères poussiéreuses. Des grimoires anciens et des parchemins jaunissent sur les rayons. Au centre, un livre ouvert semble vous attendre.",
+    "condition_classe": {
+      "mage": "Vous reconnaissez immédiatement plusieurs ouvrages de magie avancée. Ce lieu est un trésor de connaissances !",
+      "paladin": "Vous sentez une aura de sagesse et de paix émaner de ces écrits sacrés."
+    },
+    "item_trouve": "grimoire_base",
+    "npc_rencontre": "sage_ermite",
+    "apres_dialogue": "decision_majeure_1"
+  },
+  "crypte_squelettes": {
+    "id": "crypte_squelettes",
+    "titre": "Repos Éternel Troublé",
+    "texte": "Vous descendez dans une crypte froide où reposent d'anciens guerriers. Soudain, leurs yeux s'illuminent d'une lueur rouge et ils se dressent pour vous affronter !",
+    "encounter": "squelette",
+    "encounter_multiple": true,
+    "nombre_ennemis": 2,
+    "apres_combat": "autel_ancien",
+    "choix_fuite": "couloir_principal"
+  },
+  "decision_majeure_1": {
+    "id": "decision_majeure_1",
+    "titre": "Le Choix du Héros",
+    "texte": "Vous arrivez dans une grande salle circulaire avec deux escaliers : l'un descend vers les profondeurs où vous entendez des rugissements terrifiants, l'autre monte vers une tour où brille une lumière mystérieuse.",
+    "choix": [
+      {
+        "texte": "Descendre affronter le danger",
+        "destination": "antre_dragon",
+        "trait": "heroique"
+      },
+      {
+        "texte": "Monter vers la lumière mystérieuse",
+        "destination": "tour_sorcier",
+        "trait": "sage"
+      },
+      {
+        "texte": "Chercher une troisième voie",
+        "destination": "passage_cache",
+        "classe_requise": "voleur"
+      }
+    ]
+  },
+  "antre_dragon": {
+    "id": "antre_dragon",
+    "titre": "Le Gardien Ultime",
+    "texte": "Vous descendez dans une caverne immense où dort un jeune dragon sur un tas de trésors. Ses écailles brillent à la lueur des gemmes. Il ouvre un œil doré et vous fixe...",
+    "encounter": "dragon_mineur",
+    "apres_combat": "fin_heroique",
+    "choix_dialogue": [
+      {
+        "texte": "Tenter de négocier",
+        "destination": "negociation_dragon",
+        "classe_avantage": "paladin"
+      },
+      {
+        "texte": "Attaquer par surprise",
+        "destination": "combat_dragon",
+        "classe_avantage": "voleur"
+      }
+    ]
+  },
+  "tour_sorcier": {
+    "id": "tour_sorcier",
+    "titre": "Magie Corrompue",
+    "texte": "Au sommet de la tour, un sorcier noir manipule des énergies sombres. Il lève les yeux vers vous avec un sourire cruel : 'Encore un aventurier téméraire... Parfait pour mes expériences !'",
+    "encounter": "sorcier_noir",
+    "apres_combat": "fin_sage",
+    "dialogue_pre_combat": {
+      "mage": "Vous reconnaissez les sorts qu'il utilise... de la magie interdite !",
+      "paladin": "Votre foi vous protège de son aura maléfique."
+    }
+  },
+  "fin_heroique": {
+    "id": "fin_heroique",
+    "titre": "Légende Née",
+    "texte": "Après avoir vaincu le dragon, vous devenez une légende. Les bardes chantent vos exploits dans tout le royaume. Le trésor du dragon vous permet de vivre confortablement, mais plus important encore, vous avez prouvé votre courage face au danger ultime.",
+    "type": "fin",
+    "recompense": {
+      "or": 500,
+      "experience": 1000,
+      "titre": "Tueur de Dragon"
+    }
+  },
+  "fin_sage": {
+    "id": "fin_sage",
+    "titre": "Gardien du Savoir",
+    "texte": "En défaisant le sorcier noir, vous libérez la magie corrompue qui empoisonnait le donjon. Vous devenez le nouveau gardien de ce lieu, protégeant les connaissances anciennes pour les générations futures.",
+    "type": "fin",
+    "recompense": {
+      "or": 300,
+      "experience": 800,
+      "titre": "Gardien du Savoir"
+    }
+  },
+  "npcs": {
+    "sage_ermite": {
+      "nom": "Maître Aldric",
+      "description": "Un vieil homme à la barbe blanche, gardien de la bibliothèque",
+      "dialogue_initial": "Ah, un visiteur ! Cela fait si longtemps... Que cherchez-vous dans ces lieux oubliés ?",
+      "quetes": [
+        {
+          "nom": "Récupérer le Cristal",
+          "description": "Trouvez le Cristal de Lumière pour purifier le donjon",
+          "recompense": "amulette_protection",
+          "condition": "avoir_cristal_lumiere"
+        }
+      ],
+      "peut_rejoindre": true,
+      "condition_recrutement": {
+        "classe": ["mage", "paladin"],
+        "dialogue_reussi": true
+      },
+      "competences_allie": {
+        "soin": 40,
+        "conseil_combat": true
+      }
+    }
+  }
+}

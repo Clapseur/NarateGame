@@ -1,0 +1,196 @@
+{
+  "gobelin": {
+    "nom": "Gobelin",
+    "description": "Une petite créature verte et malicieuse armée d'une massue.",
+    "stats": {
+      "vie": 45,
+      "attaque": 12,
+      "defense": 6,
+      "vitesse": 14
+    },
+    "attaques": [
+      {
+        "nom": "Coup de Massue",
+        "degats": 15,
+        "precision": 85
+      },
+      {
+        "nom": "Morsure Vicieuse",
+        "degats": 10,
+        "precision": 95,
+        "effet": "poison_leger"
+      }
+    ],
+    "resistances": [],
+    "faiblesses": ["intimidation"],
+    "loot": [
+      {"item": "pain_voyage", "chance": 60},
+      {"item": "potion_vie", "chance": 30}
+    ],
+    "experience": 25,
+    "or": 15,
+    "dialogue_fuite": "Le gobelin grogne et s'enfuit dans les buissons !",
+    "evitable_par": ["guerrier_intimidation"]
+  },
+  "squelette": {
+    "nom": "Squelette Guerrier",
+    "description": "Les restes animés d'un ancien combattant, brandissant une épée rouillée.",
+    "stats": {
+      "vie": 60,
+      "attaque": 16,
+      "defense": 10,
+      "vitesse": 8
+    },
+    "attaques": [
+      {
+        "nom": "Frappe d'Outre-tombe",
+        "degats": 18,
+        "precision": 80
+      },
+      {
+        "nom": "Regard Terrifiant",
+        "degats": 0,
+        "precision": 70,
+        "effet": "peur"
+      }
+    ],
+    "resistances": ["poison", "peur"],
+    "faiblesses": ["magie_divine"],
+    "loot": [
+      {"item": "potion_vie", "chance": 40},
+      {"item": "épée_fer", "chance": 20}
+    ],
+    "experience": 40,
+    "or": 25,
+    "dialogue_fuite": "Le squelette s'effondre en cliquetant, ses os se dispersant.",
+    "evitable_par": ["paladin_autorite_divine"]
+  },
+  "loup_geant": {
+    "nom": "Loup Géant",
+    "description": "Un prédateur massif aux crocs acérés et aux yeux luisants.",
+    "stats": {
+      "vie": 80,
+      "attaque": 20,
+      "defense": 8,
+      "vitesse": 18
+    },
+    "attaques": [
+      {
+        "nom": "Morsure Sauvage",
+        "degats": 22,
+        "precision": 90
+      },
+      {
+        "nom": "Hurlement",
+        "degats": 0,
+        "precision": 100,
+        "effet": "peur",
+        "cible": "tous"
+      },
+      {
+        "nom": "Bond Féroce",
+        "degats": 28,
+        "precision": 70,
+        "recharge": 2
+      }
+    ],
+    "resistances": ["froid"],
+    "faiblesses": ["feu"],
+    "loot": [
+      {"item": "potion_vie", "chance": 70},
+      {"item": "cape_ombre", "chance": 25}
+    ],
+    "experience": 60,
+    "or": 40,
+    "dialogue_fuite": "Le loup géant gronde et disparaît dans la forêt sombre.",
+    "evitable_par": ["voleur_discretion"]
+  },
+  "sorcier_noir": {
+    "nom": "Sorcier Noir",
+    "description": "Un mage corrompu enveloppé dans des robes sombres, maîtrisant la magie interdite.",
+    "stats": {
+      "vie": 70,
+      "attaque": 25,
+      "defense": 12,
+      "vitesse": 15
+    },
+    "attaques": [
+      {
+        "nom": "Éclair Sombre",
+        "degats": 30,
+        "precision": 85,
+        "type": "magie"
+      },
+      {
+        "nom": "Drain de Vie",
+        "degats": 20,
+        "precision": 90,
+        "effet": "vol_vie",
+        "type": "magie"
+      },
+      {
+        "nom": "Malédiction",
+        "degats": 0,
+        "precision": 75,
+        "effet": "malediction_attaque",
+        "type": "magie"
+      }
+    ],
+    "resistances": ["magie_noire", "peur"],
+    "faiblesses": ["magie_divine", "lumiere"],
+    "loot": [
+      {"item": "potion_mana", "chance": 80},
+      {"item": "grimoire_base", "chance": 30},
+      {"item": "amulette_protection", "chance": 15}
+    ],
+    "experience": 100,
+    "or": 75,
+    "dialogue_fuite": "Le sorcier ricane et disparaît dans un nuage de fumée noire.",
+    "evitable_par": ["mage_connaissance_arcane"],
+    "boss": true
+  },
+  "dragon_mineur": {
+    "nom": "Jeune Dragon",
+    "description": "Un dragon encore jeune mais déjà redoutable, crachant des flammes ardentes.",
+    "stats": {
+      "vie": 150,
+      "attaque": 35,
+      "defense": 20,
+      "vitesse": 12
+    },
+    "attaques": [
+      {
+        "nom": "Souffle de Feu",
+        "degats": 40,
+        "precision": 80,
+        "type": "feu",
+        "cible": "tous"
+      },
+      {
+        "nom": "Griffes Acérées",
+        "degats": 30,
+        "precision": 90
+      },
+      {
+        "nom": "Rugissement Terrifiant",
+        "degats": 0,
+        "precision": 100,
+        "effet": "peur_intense",
+        "cible": "tous"
+      }
+    ],
+    "resistances": ["feu", "physique_leger"],
+    "faiblesses": ["froid", "magie"],
+    "loot": [
+      {"item": "potion_vie", "chance": 100},
+      {"item": "cristal_lumiere", "chance": 50},
+      {"item": "anneau_vitesse", "chance": 30}
+    ],
+    "experience": 200,
+    "or": 150,
+    "dialogue_fuite": "Le dragon rugit de colère mais vous laisse partir, amusé par votre audace.",
+    "evitable_par": [],
+    "boss": true,
+    "dialogue_pre_combat": "Le jeune dragon vous fixe de ses yeux dorés, évaluant si vous êtes une menace..."
+  }
+}

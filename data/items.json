@@ -1,0 +1,132 @@
+{
+  "armes": {
+    "épée_fer": {
+      "nom": "Épée de Fer",
+      "type": "arme",
+      "attaque": 12,
+      "description": "Une épée solide forgée dans le fer le plus pur.",
+      "valeur": 50
+    },
+    "baton_apprenti": {
+      "nom": "Bâton d'Apprenti",
+      "type": "arme",
+      "attaque": 8,
+      "bonus_magie": 5,
+      "description": "Un bâton simple mais efficace pour canaliser la magie.",
+      "valeur": 30
+    },
+    "dague_acier": {
+      "nom": "Dague d'Acier",
+      "type": "arme",
+      "attaque": 10,
+      "bonus_vitesse": 3,
+      "description": "Une lame rapide et tranchante, parfaite pour les attaques sournoises.",
+      "valeur": 40
+    },
+    "epee_benedite": {
+      "nom": "Épée Bénite",
+      "type": "arme",
+      "attaque": 14,
+      "bonus_contre_mal": 8,
+      "description": "Une épée consacrée qui brille d'une lumière divine.",
+      "valeur": 80
+    }
+  },
+  "armures": {
+    "bouclier_bois": {
+      "nom": "Bouclier de Bois",
+      "type": "bouclier",
+      "defense": 8,
+      "description": "Un bouclier robuste taillé dans du chêne massif.",
+      "valeur": 25
+    },
+    "cape_ombre": {
+      "nom": "Cape d'Ombre",
+      "type": "armure",
+      "defense": 4,
+      "bonus_esquive": 10,
+      "description": "Une cape sombre qui aide à se fondre dans les ombres.",
+      "valeur": 35
+    },
+    "armure_sacree": {
+      "nom": "Armure Sacrée",
+      "type": "armure",
+      "defense": 12,
+      "resistance_mal": 15,
+      "description": "Une armure bénie qui protège contre les forces du mal.",
+      "valeur": 100
+    }
+  },
+  "consommables": {
+    "potion_vie": {
+      "nom": "Potion de Vie",
+      "type": "consommable",
+      "effet": "soin",
+      "valeur_effet": 50,
+      "description": "Une fiole rouge qui restaure la vitalité.",
+      "valeur": 20,
+      "utilisable_combat": true
+    },
+    "potion_mana": {
+      "nom": "Potion de Mana",
+      "type": "consommable",
+      "effet": "mana",
+      "valeur_effet": 30,
+      "description": "Une potion bleue qui restaure l'énergie magique.",
+      "valeur": 15,
+      "utilisable_combat": true
+    },
+    "antidote": {
+      "nom": "Antidote",
+      "type": "consommable",
+      "effet": "guerison_poison",
+      "description": "Neutralise tous les poisons.",
+      "valeur": 10,
+      "utilisable_combat": true
+    },
+    "pain_voyage": {
+      "nom": "Pain de Voyage",
+      "type": "consommable",
+      "effet": "soin",
+      "valeur_effet": 25,
+      "description": "Un pain nourrissant qui redonne des forces.",
+      "valeur": 5,
+      "utilisable_combat": false
+    }
+  },
+  "artefacts": {
+    "grimoire_base": {
+      "nom": "Grimoire des Bases",
+      "type": "artefact",
+      "bonus_magie": 8,
+      "description": "Un livre ancien contenant des sorts fondamentaux.",
+      "valeur": 60,
+      "effet_special": "double_mana_regen"
+    },
+    "amulette_protection": {
+      "nom": "Amulette de Protection",
+      "type": "artefact",
+      "defense": 5,
+      "resistance_magie": 10,
+      "description": "Un pendentif mystique qui protège contre la magie hostile.",
+      "valeur": 75,
+      "effet_special": "resistance_sorts"
+    },
+    "anneau_vitesse": {
+      "nom": "Anneau de Vitesse",
+      "type": "artefact",
+      "bonus_vitesse": 8,
+      "description": "Un anneau enchanté qui accélère les mouvements.",
+      "valeur": 90,
+      "effet_special": "double_esquive"
+    },
+    "cristal_lumiere": {
+      "nom": "Cristal de Lumière",
+      "type": "artefact",
+      "description": "Un cristal brillant qui repousse les ténèbres.",
+      "valeur": 150,
+      "effet_special": "revele_passages_secrets",
+      "utilisable_dialogue": true
+    }
+  }
+}

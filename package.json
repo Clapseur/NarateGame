@@ -1,0 +1,20 @@
+{
+  "name": "donjon-rpg",
+  "version": "1.0.0",
+  "description": "Un jeu de rôle narratif en terminal inspiré des RPG classiques",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "start": "node main.js",
+    "dev": "node main.js"
+  },
+  "keywords": ["rpg", "terminal", "french", "narrative", "game"],
+  "author": "Développeur",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "figlet": "^1.7.0",
+    "boxen": "^7.1.1",
+    "inquirer": "^9.2.12"
+  }
+}
