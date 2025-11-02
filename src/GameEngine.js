@@ -18,6 +18,7 @@ export class GameEngine {
             or: 100,
             experience: 0,
             niveau: 1,
+            adventureLog: [],
             statistiques: {
                 ennemis_vaincus: 0,
                 objets_trouves: 0,
