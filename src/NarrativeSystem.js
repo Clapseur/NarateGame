@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import chalk from 'chalk';
 import boxen from 'boxen';
 import inquirer from 'inquirer';
@@ -68,20 +70,20 @@ export class NarrativeSystem {
         console.log();
 
         // Texte conditionnel basé sur la classe
+        let fullText = sceneData.texte;
         if (sceneData.condition_classe) {
             const classeJoueur = this.game.gameState.joueur.classe;
             if (sceneData.condition_classe[classeJoueur]) {
-                console.log(boxen(
-                    chalk.cyan.italic(sceneData.condition_classe[classeJoueur]),
-                    {
-                        padding: 1,
-                        borderStyle: 'round',
-                        borderColor: 'cyan'
-                    }
-                ));
-                console.log();
+                fullText += '\n\n' + sceneData.condition_classe[classeJoueur];
             }
         }
+
+        // Enregistrer dans le log
+        this.game.gameState.adventureLog.push({
+            type: 'scene',
+            title: sceneData.titre,
+            text: fullText
+        });
 
         await this.game.attendreEntree();
     }
@@ -303,6 +305,14 @@ export class NarrativeSystem {
             resultat = await this.combat.demarrerCombat(sceneData.encounter);
         }
 
+        // Enregistrer le combat dans le log
+        this.game.gameState.adventureLog.push({
+            type: 'combat',
+            enemy: sceneData.encounter,
+            result: resultat,
+            multiple: sceneData.encounter_multiple || false
+        });
+
         return resultat;
     }
 
@@ -361,6 +371,13 @@ export class NarrativeSystem {
             // Incrémenter le compteur de décisions
             this.game.gameState.statistiques.decisions_prises++;
 
+            // Enregistrer le choix dans le log
+            this.game.gameState.adventureLog.push({
+                type: 'choice',
+                text: choixSelectionne.texte,
+                destination: choixSelectionne.destination
+            });
+
             // Aller à la destination
             this.game.gameState.position_histoire = choixSelectionne.destination;
             break;
@@ -404,6 +421,29 @@ export class NarrativeSystem {
 
         await this.game.attendreEntree();
 
+        // Demander si le joueur souhaite sauvegarder le rapport d'aventure
+        const sauvegarderRapport = await inquirer.prompt([
+            {
+                type: 'confirm',
+                name: 'sauvegarder',
+                message: 'Souhaitez-vous sauvegarder un rapport Markdown de votre aventure ?',
+                default: true
+            }
+        ]);
+
+        if (sauvegarderRapport.sauvegarder) {
+            const nomRapport = await inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'nom',
+                    message: 'Entrez un nom pour votre rapport d\'aventure (ou laissez vide pour utiliser le nom par défaut) :',
+                    default: ''
+                }
+            ]);
+
+            this.genererRapportMarkdown(finData, tempsJeu, nomRapport.nom);
+        }
+
         // Proposer de rejouer
         const rejouer = await inquirer.prompt([
             {
@@ -425,6 +465,7 @@ export class NarrativeSystem {
                 or: 100,
                 experience: 0,
                 niveau: 1,
+                adventureLog: [],
                 statistiques: {
                     ennemis_vaincus: 0,
                     objets_trouves: 0,
@@ -438,7 +479,7 @@ export class NarrativeSystem {
         }
     }
 
-    // Affichage du game over
+        // Affichage du game over
     async afficherGameOver() {
         console.clear();
         
@@ -455,6 +496,33 @@ export class NarrativeSystem {
         ));
 
         await this.game.attendreEntree();
+
+        // Demander si le joueur souhaite sauvegarder le rapport d'aventure
+        const sauvegarderRapport = await inquirer.prompt([
+            {
+                type: 'confirm',
+                name: 'sauvegarder',
+                message: 'Souhaitez-vous sauvegarder un rapport Markdown de votre aventure ?',
+                default: true
+            }
+        ]);
+
+        if (sauvegarderRapport.sauvegarder) {
+            const nomRapport = await inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'nom',
+                    message: 'Entrez un nom pour votre rapport d\'aventure (ou laissez vide pour utiliser le nom par défaut) :',
+                    default: ''
+                }
+            ]);
+
+            this.genererRapportMarkdown({ 
+                titre: 'Défaite', 
+                texte: 'Votre aventure se termine ici... Les ténèbres du donjon vous ont eu raison.', 
+                type: 'fin' 
+            }, Math.floor((Date.now() - this.tempsDebut) / 1000 / 60), nomRapport.nom);
+        }
 
         const rejouer = await inquirer.prompt([
             {
@@ -506,5 +574,59 @@ export class NarrativeSystem {
         ));
 
         await this.game.attendreEntree();
+    }
+
+    // Génération du rapport Markdown de l'aventure
+    genererRapportMarkdown(finData, tempsJeu, customName = '') {
+        const joueur = this.game.gameState.joueur;
+        const log = this.game.gameState.adventureLog;
+
+        let markdown = `# Aventure de ${joueur.nom} - ${this.game.gameData.classes[joueur.classe].nom}\n\n`;
+
+        markdown += `## Statistiques finales\n\n`;
+        markdown += `- **Classe**: ${this.game.gameData.classes[joueur.classe].nom}\n`;
+        markdown += `- **Temps de jeu**: ${tempsJeu} minutes\n`;
+        markdown += `- **Or final**: ${this.game.gameState.or}\n`;
+        markdown += `- **Expérience**: ${this.game.gameState.experience}\n`;
+        markdown += `- **Ennemis vaincus**: ${this.game.gameState.statistiques.ennemis_vaincus}\n`;
+        markdown += `- **Objets trouvés**: ${this.game.gameState.statistiques.objets_trouves}\n`;
+        markdown += `- **Décisions prises**: ${this.game.gameState.statistiques.decisions_prises}\n`;
+        markdown += `- **Traits développés**: ${this.game.gameState.traits.join(', ') || 'Aucun'}\n\n`;
+
+        markdown += `## Récit de l'aventure\n\n`;
+
+        log.forEach((entry, index) => {
+            if (entry.type === 'scene') {
+                markdown += `### ${entry.title}\n\n`;
+                markdown += `${entry.text}\n\n`;
+            } else if (entry.type === 'choice') {
+                markdown += `**Choix fait**: ${entry.text}\n\n`;
+            } else if (entry.type === 'combat') {
+                markdown += `**Combat contre**: ${entry.enemy}\n`;
+                markdown += `**Résultat**: ${entry.result}\n\n`;
+            }
+        });
+
+        markdown += `### ${finData.titre}\n\n`;
+        markdown += `${finData.texte}\n\n`;
+
+        if (finData.recompense) {
+            markdown += `## Récompenses finales\n\n`;
+            if (finData.recompense.titre) {
+                markdown += `- **Titre**: ${finData.recompense.titre}\n`;
+            }
+            if (finData.recompense.or) {
+                markdown += `- **Or bonus**: ${finData.recompense.or}\n`;
+            }
+        }
+
+        // Générer le nom du fichier
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+        const baseName = customName.trim() || `aventure_${joueur.nom}`;
+        const fileName = `${baseName}_${timestamp}.md`;
+        const filePath = path.join(process.cwd(), fileName);
+        
+        fs.writeFileSync(filePath, markdown, 'utf8');
+        console.log(chalk.green(`📖 Rapport d'aventure sauvegardé: ${fileName}`));
     }
 }
